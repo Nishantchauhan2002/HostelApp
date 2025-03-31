@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct SwiftUIView: View {
+struct BaseSwiftUIView: View {
     @State private var selectedTab: Int = 0  // Track the selected tab
 
         let tabs: [(image: String, tag: Int)] = [
@@ -18,7 +18,18 @@ struct SwiftUIView: View {
             ("indianrupeesign", 4)
         ]
         
-        var body: some View {
+    var body: some View {
+        ZStack {
+            LinearGradient(
+                gradient: Gradient(colors: [
+                    Color.white,
+                    Color(hex: "7A6FC5")
+                ]),
+                startPoint: .top,
+                endPoint: .bottom
+            )
+            
+            .edgesIgnoringSafeArea(.all)
             VStack {
                 Spacer()
                 HStack {
@@ -51,13 +62,15 @@ struct SwiftUIView: View {
                 .background(RoundedRectangle(cornerRadius: 25).fill(Color.init(hex: "43328B")))
             }
             .edgesIgnoringSafeArea(.bottom)
+            
         }
+    }
 }
 
 
 struct ContentView: View {
     var body: some View {
-        SwiftUIView()
+        BaseSwiftUIView()
     }
 }
 
@@ -69,7 +82,7 @@ struct ContentView_Previews: PreviewProvider {
 
 
 #Preview {
-    SwiftUIView()
+    BaseSwiftUIView()
 }
 
 extension Color {
