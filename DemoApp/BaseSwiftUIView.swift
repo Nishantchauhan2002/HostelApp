@@ -9,15 +9,17 @@ import SwiftUI
 
 struct BaseSwiftUIView: View {
     @State private var selectedTab: Int = 0  // Track the selected tab
+    var onTabSelected: ((Int) -> Void)?  // Callback to notify button press
+    var isFooterHidden: Bool  // Control footer visibility
 
-        let tabs: [(image: String, tag: Int)] = [
-            ("square.grid.2x2", 0),  // Example SF Symbols
-            ("person.badge.key", 1),
-            ("house.fill", 2),
-            ("fork.knife", 3),
-            ("indianrupeesign", 4)
-        ]
-        
+    let tabs: [(image: String, tag: Int)] = [
+        ("square.grid.2x2", 0),
+        ("person.badge.key", 1),
+        ("house.fill", 2),
+        ("fork.knife", 3),
+        ("indianrupeesign", 4)
+    ]
+    
     var body: some View {
         ZStack {
             LinearGradient(
@@ -28,41 +30,44 @@ struct BaseSwiftUIView: View {
                 startPoint: .top,
                 endPoint: .bottom
             )
-            
             .edgesIgnoringSafeArea(.all)
+
             VStack {
                 Spacer()
-                HStack {
-                    ForEach(tabs, id: \.tag) { tab in
-                        Button(action: {
-                            withAnimation(.spring()) {
-                                selectedTab = tab.tag
+                
+                if !isFooterHidden {  // Hide footer when needed
+                    HStack {
+                        ForEach(tabs, id: \.tag) { tab in
+                            Button(action: {
+                                withAnimation(.spring()) {
+                                    selectedTab = tab.tag
+                                    onTabSelected?(tab.tag)  // Notify UIKit side
+                                }
+                            }) {
+                                VStack {
+                                    Image(systemName: tab.image)
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 24, height: 24)
+                                        .padding()
+                                        .foregroundColor(Color.white)
+                                        .background(
+                                            Circle()
+                                                .fill(Color.init(hex: "5F529C").opacity(selectedTab == tab.tag ? 1 : 0))
+                                                .shadow(color: selectedTab == tab.tag ? Color.white.opacity(0.9) : Color.clear, radius: 5)
+                                        )
+                                        .offset(y: selectedTab == tab.tag ? -20 : 0)
+                                        .scaleEffect(selectedTab == tab.tag ? 1.2 : 1)
+                                }
                             }
-                        }) {
-                            VStack {
-                                Image(systemName: tab.image)
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 24, height: 24)
-                                    .padding()
-                                    .foregroundColor(Color.white)
-                                    .background(
-                                        Circle()
-                                            .fill(Color.init(hex: "5F529C").opacity(selectedTab == tab.tag ? 1 : 0))
-                                            .shadow(color: selectedTab == tab.tag ? Color.white.opacity(0.9) : Color.clear, radius: 5)
-                                    )
-                                    .offset(y: selectedTab == tab.tag ? -20 : 0)  // Move the selected button up
-                                    .scaleEffect(selectedTab == tab.tag ? 1.2 : 1) // Scale effect for selected tab
-                            }
+                            .frame(maxWidth: .infinity)
                         }
-                        .frame(maxWidth: .infinity)
                     }
+                    .frame(height: 80)
+                    .background(RoundedRectangle(cornerRadius: 25).fill(Color.init(hex: "43328B")))
                 }
-                .frame(height: 80)
-                .background(RoundedRectangle(cornerRadius: 25).fill(Color.init(hex: "43328B")))
             }
             .edgesIgnoringSafeArea(.bottom)
-            
         }
     }
 }
@@ -70,7 +75,7 @@ struct BaseSwiftUIView: View {
 
 struct ContentView: View {
     var body: some View {
-        BaseSwiftUIView()
+        BaseSwiftUIView( isFooterHidden: false)
     }
 }
 
@@ -82,7 +87,7 @@ struct ContentView_Previews: PreviewProvider {
 
 
 #Preview {
-    BaseSwiftUIView()
+    BaseSwiftUIView( isFooterHidden: false)
 }
 
 extension Color {
