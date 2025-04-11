@@ -14,10 +14,7 @@ class HomeViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         addGifFile();
-        
-
     }
     func addGifFile(){
         if let url = Bundle.main.url(forResource: "hostel", withExtension: "gif"),
@@ -27,6 +24,6 @@ class HomeViewController: BaseViewController {
         }  
     }
     override func viewWillAppear(_ animated: Bool) {
-        self.toggleFooterVisibility(false)
+        self.toggleFooterVisibility(true)
     }
 }

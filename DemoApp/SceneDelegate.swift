@@ -22,7 +22,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
        window = UIWindow(windowScene: windowScene)
        
        // Set HomeViewController as Root View Controller
-       let homeVC = HomeViewController()
+        let homeVC = HomeViewController(nibName: "HomeViewController", bundle: nil);
        let navigationController = UINavigationController(rootViewController: homeVC)
        window?.rootViewController = navigationController
        

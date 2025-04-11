@@ -10,30 +10,59 @@ import SwiftUI
 
 class BaseViewController: UIViewController {
     
-    @IBOutlet weak var swiftUIViewController: UIView!
-    
-    
     private var hostingController: UIHostingController<BaseSwiftUIView>?
     private var isFooterHidden = false  // Track footer visibility
     
     override func viewDidLoad() {
            super.viewDidLoad()
-            setupSwiftUIView()
+        setupSwiftUIBackground()
        }
 
-    private func setupSwiftUIView() {
+//    private func setupSwiftUIView() {
+//        let swiftUIView = BaseSwiftUIView(
+//            onTabSelected: { [weak self] tabIndex in
+//                self?.handleTabSelection(tabIndex)
+//            },
+//            isFooterHidden: isFooterHidden
+//        )
+//        
+//        let hostingController = UIHostingController(rootView: swiftUIView)
+//        self.hostingController = hostingController
+//        addChild(hostingController)
+//        guard let container = baseViewController else {
+//            print("❌ baseViewController is nil")
+//            return
+//        }
+//
+//        container.addSubview(hostingController.view)
+//
+//        hostingController.view.translatesAutoresizingMaskIntoConstraints = false
+//        NSLayoutConstraint.activate([
+//            hostingController.view.topAnchor.constraint(equalTo: container.topAnchor),
+//            hostingController.view.bottomAnchor.constraint(equalTo: container.bottomAnchor),
+//            hostingController.view.leadingAnchor.constraint(equalTo: container.leadingAnchor),
+//            hostingController.view.trailingAnchor.constraint(equalTo: container.trailingAnchor)
+//        ])
+//
+//        hostingController.didMove(toParent: self)
+//        
+//    }
+    
+    private func setupSwiftUIBackground() {
         let swiftUIView = BaseSwiftUIView(
-            onTabSelected: { [weak self] tabIndex in
-                self?.handleTabSelection(tabIndex)
+            onTabSelected: { [weak self] index in
+                self?.handleTabSelection(index)
             },
             isFooterHidden: isFooterHidden
         )
-        
+
         let hostingController = UIHostingController(rootView: swiftUIView)
         self.hostingController = hostingController
         addChild(hostingController)
-        view.addSubview(hostingController.view)
-        
+
+        // Add it BEHIND all UIKit views
+        view.insertSubview(hostingController.view, at: 0)
+
         hostingController.view.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             hostingController.view.topAnchor.constraint(equalTo: view.topAnchor),
@@ -41,7 +70,7 @@ class BaseViewController: UIViewController {
             hostingController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             hostingController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
-        
+
         hostingController.didMove(toParent: self)
     }
     private func handleTabSelection(_ tabIndex: Int) {
@@ -80,8 +109,6 @@ class BaseViewController: UIViewController {
         )
     }
 }
-
-  
 
  
   
