@@ -10,6 +10,10 @@ import SwiftUI
 struct SignUpView: View {
     
     @State private var userName:String = ""
+    @State private var rollNumber:String = ""
+    @State private var emailAddress:String = ""
+    @State private var contactNumber:String = ""
+    @State private var otpNumber:String = ""
     @State private var password:String = ""
     @State private var isPasswordVisible:Bool = false
     
@@ -48,7 +52,7 @@ struct SignUpView: View {
                                 .cornerRadius(10)
                                 .shadow(radius: 2)
                             
-                            TextField("Enter Roll no", text: $userName)
+                            TextField("Enter Roll no", text: $rollNumber)
                                 .padding()
                                 .background(Color.white)
                                 .cornerRadius(10)
@@ -56,7 +60,7 @@ struct SignUpView: View {
                         }
                         .padding(.horizontal,20)
                         
-                        TextField("Enter Your email", text: $userName)
+                        TextField("Enter Your email", text: $emailAddress)
                             .padding()
                             .background(Color.white)
                             .cornerRadius(10)
@@ -64,7 +68,7 @@ struct SignUpView: View {
                             .padding(.horizontal,20)
                         
                         HStack(spacing: 10){
-                            TextField("Contact Number", text: $userName)
+                            TextField("Contact Number", text: $contactNumber)
                                 .padding()
                                 .background(Color.white)
                                 .cornerRadius(10)
@@ -80,7 +84,7 @@ struct SignUpView: View {
                         }
                         .padding(.horizontal,20)
                         
-                        TextField("Enter OTP", text: $userName)
+                        TextField("Enter OTP", text: $otpNumber)
                             .padding()
                             .background(Color.white)
                             .cornerRadius(10)
@@ -137,7 +141,7 @@ struct SignUpView: View {
                         }
                         .padding(.horizontal,50)
                     }
-                    .navigationBarBackButtonHidden(true);
+//                    .navigationBarBackButtonHidden(true);
                     
                 }
                 
