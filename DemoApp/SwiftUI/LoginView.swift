@@ -12,6 +12,11 @@ struct LoginView: View {
     @State private var password:String = ""
     @State private var isPasswordVisible:Bool = false
 
+    
+    var onRegisterTapped: (() -> Void)?
+    var onSignIn: ((String, String) -> Void)?
+    
+    
 var body: some View {
     
     ZStack{
@@ -77,6 +82,7 @@ var body: some View {
             
             Button {
                 //Handle login button action
+                onSignIn?(userName, password);
             } label: {
                 Text("Sign In")
                    .fontWeight(.bold)
@@ -99,9 +105,18 @@ var body: some View {
             
            HStack {
                Text("Not a member?")
-               Text("Register now")
-                   .foregroundColor(Color(hex: "43328B"))
-                   .bold()
+//               Text("Register now")
+//                   .foregroundColor(Color(hex: "43328B"))
+//                   .bold()
+//               
+               Button {
+                   onRegisterTapped?();
+               } label: {
+                   Text("Register Now")
+                      .foregroundColor(Color.init(hex: "43328B"))
+                      .bold()
+                      .cornerRadius(10)
+               }
            }
            .font(.caption)
            .padding(.top, 10)
